@@ -1,0 +1,27 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: cumulus-vx-5.9.1
+    driver:
+      box: CumulusCommunity/cumulus-vx
+      box_url: https://d2cd9e7ca6hntp.cloudfront.net/public/CumulusLinux-5.9.1/cumulus-linux-5.9.1-vx-amd64-vbox.box
+      provision: true
+
+suites:
+  - name: spine
+    run_list:
+      - recipe[cumulus::spine]
+    attributes:
+  - name: leaf1
+    run_list:
+      - recipe[cumulus::leaf]
+    attributes:
+  - name: leaf2
+    run_list:
+      - recipe[cumulus::leaf]
+    attributes:
