@@ -1,9 +1,18 @@
 ---
 driver:
   name: vagrant
+  provider: virtualbox
 
 provisioner:
   name: chef_zero
+
+verifier:
+  name: inspec
+
+transport:
+  name: ssh
+  username: vagrant
+  password: vagrant
 
 platforms:
   - name: cumulus-vx-5.9.1
@@ -13,15 +22,29 @@ platforms:
       provision: true
 
 suites:
-  - name: spine
+  - name: spine01
+    driver:
+      vm_hostname: false
+      customize:
+        memory: 2048
+        cpus: 2
     run_list:
-      - recipe[cumulus::spine]
-    attributes:
-  - name: leaf1
+      - recipe[cumulus::spine01]
+
+  - name: leaf01
+    driver:
+      vm_hostname: false
+      customize:
+        memory: 2048
+        cpus: 2
     run_list:
-      - recipe[cumulus::leaf]
-    attributes:
-  - name: leaf2
+      - recipe[cumulus::leaf01]
+
+  - name: leaf02
+    driver:
+      vm_hostname: false
+      customize:
+        memory: 2048
+        cpus: 2
     run_list:
-      - recipe[cumulus::leaf]
-    attributes:
+      - recipe[cumulus::leaf02]
